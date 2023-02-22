@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Dynamic;
+using System.Linq;
 using System.Numerics;
 
 namespace Methods
@@ -91,6 +92,28 @@ namespace Methods
             }
         }
 
+        static IEnumerable<int> CyclicIndex(int length, int start)
+        {
+            int i = start;
+            while (true)
+            {
+                if (i == length)
+                    i = 0;
+                yield return i++;
+            }
+        }
+
+        static dynamic InitMe(string s, int i, double x)
+        {
+            dynamic man = new ExpandoObject();
+            man.Name = s;
+            man.Age = i;
+            man.Height = x;
+            man.WriteMe = $"\nName: {man.Name}\tAge: {man.Age}\tHeight: {man.Height}";
+
+            return man;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine(GetMax(2, 3));
@@ -102,9 +125,21 @@ namespace Methods
             int[] ints = { 1, 2, 3, 4, 5, };
             double[] doubles = { 10, 20, 30, 40, 50, 60, };
 
-            Console.WriteLine(GetSum(ints, 0, ints.Length-1));
+            Console.WriteLine(GetSum(ints, 0, ints.Length - 1));
             Console.WriteLine(GetSum(doubles, 1, 1));
             Console.WriteLine(GetSum(doubles, 1, 3));
+
+            string s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Console.WriteLine("Stiskni 'q' pro ukončení cyklu:");
+            foreach (var x in CyclicIndex(s.Length, 3))
+            {
+                Console.Write(s[x]);
+                if (Console.ReadKey(true).KeyChar == 'q')
+                    break;
+            }
+
+            dynamic man = InitMe("Jan", 20, 202.5);
+            Console.WriteLine(man.WriteMe);
         }
     }
 }
