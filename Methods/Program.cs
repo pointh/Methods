@@ -7,6 +7,26 @@ namespace Methods
 {
     internal class Program
     {
+        static int Fact(int x)
+        {
+            int f = 1;
+            for(int i = 1; i <= x; i++)
+            {
+                f *= i;
+            }
+            return f;
+        }
+
+        static void Fact(ref int x)
+        {
+            int f = 1;
+            for (int i = 1; i <= x; i++)
+            {
+                f *= i;
+            }
+            x = f;
+        }
+
         static int IterPartSum(int[] a, int n)
         {
             int soucet = 0;
@@ -167,6 +187,17 @@ namespace Methods
             Console.WriteLine("\n\n5");
             dynamic man = InitMe("Jan", 20, 202.5);
             Console.WriteLine(man.WriteMe);
+
+            // 6. předávání argumentů hodnotou
+            Console.WriteLine("\n6");
+            int a = 4;
+            Console.WriteLine($"Fact({a}) = {Fact(a)}");
+            Console.WriteLine($"a se nezměnilo: {a}\n");      
+
+            int b = 4;
+            Console.WriteLine($"b = {b} se přepočítá na {b}!");
+            Fact(ref b);
+            Console.WriteLine($"b se změnilo na {b}");
         }
     }
 }
